@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}我的网站|问答系统{% endblock %}
+
+{% block answer_active %}active{% endblock %}
+
+ {% block style %}
+        <style type="text/css">
+        .talk_show{
+            border: 2px solid #666;
+            height: 400px;
+            overflow:auto;
+        }
+
+        .q_talk{
+            margin:10px;
+            text-align:right;
+        }
+        .q_talk span{
+            display:inline-block;
+            background:#ef8201;
+            border-radius:10px;
+            color:#fff;
+            padding:5px 10px
+        }
+
+        .a_talk{
+            margin:10px;
+        }
+        .a_talk span{
+            display:inline-block;
+            background:#d9edf7;
+            border-radius:10px;
+            color: #0181cc;
+            padding:5px 10px;
+        }
+    </style>
+ {% endblock %}
+
+
+{% block content %}
+        <div class="container-fluid" style="margin-top: 40px">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 ">
+                    <div class="talk_show" id="talk_show">
+
+                    </div>
+
+                    <div style=" margin-top: 2px;border: 2px solid #666;padding: 2em ">
+                        <input type="text" class="form-control" id="question" placeholder="输入问题">
+                        <input type="button" value="提问"  class="pull-right" onclick="answer()">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        function answer(){
+            var question = document.getElementById("question").value
+            $.ajax({
+                url:'find_answer',
+                type:'GET',
+                data:{
+                    question:question
+                },
+                cache:false,
+                success:function (data) {
+                    var question = '<div class="q_talk"><span>'+ data['question'] +'</span></div>'
+                    var answer =  '<div class="a_talk" ><span>'+ data['answer'] +'</span></div>'
+                    $('#talk_show').append(question);
+                    $('#talk_show').append(answer);
+                    $('#question').val('');
+
+                },
+                error:function () {
+                     console.log('failed')
+                }
+            });
+        }
+    </script>
+{% endblock %}
