@@ -12,7 +12,7 @@ from function.answer import simarity
 from function.answer.utils import *
 import copy
 class FindEntity_base_similarity:
-    """
+    """s
     基于相似度
     """
     def __init__(self):
@@ -20,10 +20,10 @@ class FindEntity_base_similarity:
             self.entity_type=json.load(f)
 
     def stop (self,sentence):          # 去掉停止词
-        jieba.load_userdict(one_path)
+        jieba.load_userdict(segment_word_path)   # 加载个人分词词典
         wordlist = list(jieba.cut(sentence))
         #wordlist = fool.cut(sentence)[0]            # 分词
-        stopwords=['有', '属于','哪里','哪些', '和','在','的']
+        stopwords=['有', '属于','哪里','哪些', '和','在','的']   # 停止词列表
         a=copy.deepcopy(wordlist)
         for item in a:
             if item in stopwords:
@@ -69,7 +69,7 @@ class FindEntity_base_similarity:
 
 if __name__=='__main__':
         finder=FindEntity_base_similarity()
-        question = '关于开展2023年度荐才企业申报工作的通知的发文机构是哪里'
+        question = '黄嘉桓购买最多的商品类别是什么？'
         # question = '新开普是什么行业'
         # f2=FindEntity_base_AC()
         # e2=f2.main(question)
