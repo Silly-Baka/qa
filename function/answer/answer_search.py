@@ -1,7 +1,8 @@
 from py2neo import Graph
 from function.answer import question_classifier
 from function.answer import generate_sqls
-from utils import *
+from function.answer.utils import questionTypes, answerTemplates
+
 
 class answerearcher:
     def __init__(self):
