@@ -18,7 +18,6 @@ class EntityWordUtils:
     def labels(self):
         result = self.graph.run("CALL db.labels()")
         labels = [record["label"] for record in result]
-        # TODO XXX
         return labels
 
     '''获取neo4j中所有标签为label的节点名字，并写成json格式'''
