@@ -53,57 +53,57 @@ class answerearcher:
                 final_answer = "你好，我是红棉助手，有什么可以帮您~"
                 return final_answer
 
-        for i in range(len(questionTypes)):
-            if question_type==questionTypes[i]:
-                # item1_set=set()
-                # item2=''
-                # for answer in answers:
-                #     item1_set.add(answer['n.name'])
-                #     item2 = answer['m.name']
-                # item1 = ','.join(item1_set)
-                # template = f'{item2}{answerTemplates[i]}{item1}'
-                # final_answer = template
-                if question_type == '付款方_商品类别_most_type':
-                    final_answer.append(answerTemplates[i].format(answers[0]['payer.name'], answers[0]['category.name']))
-                    # TODO 这里写推荐的逻辑，如常买类别为零食、餐饮等，就推荐饭卡信用卡并介绍相关的信息
-                    #      最好是在图里新增这样的数据， 零食节点 ——> [:适合推荐的业务] ——> 信用卡节点
+            for i in range(len(questionTypes)):
+                if question_type==questionTypes[i]:
+                    # item1_set=set()
+                    # item2=''
+                    # for answer in answers:
+                    #     item1_set.add(answer['n.name'])
+                    #     item2 = answer['m.name']
+                    # item1 = ','.join(item1_set)
+                    # template = f'{item2}{answerTemplates[i]}{item1}'
+                    # final_answer = template
+                    if question_type == '付款方_商品类别_most_type':
+                        final_answer.append(answerTemplates[i].format(answers[0]['payer.name'], answers[0]['category.name']))
+                        # TODO 这里写推荐的逻辑，如常买类别为零食、餐饮等，就推荐饭卡信用卡并介绍相关的信息
+                        #      最好是在图里新增这样的数据， 零食节点 ——> [:适合推荐的业务] ——> 信用卡节点
 
-                    # 从neo4j中找出该商品类型适合推荐的产品
-                    categoryName = answers[0]['category.name']
-                    recommend_service = []
-                    sql = f"MATCH (t:`商品类别`)-[r:`推荐业务`]->(c:`信用卡`) WHERE t.name = '{categoryName}' RETURN c"
-                    result = self.g.run(sql)
-                    # TODO 待改造为通用逻辑
-                    for record in result:
-                        card = result['c']
-                        final_answer.append(
-                            f"该用户适合推荐信用卡:{card['name']}")
-                        final_answer.append(f"该卡详细信息为:{card['description']}")
+                        # 从neo4j中找出该商品类型适合推荐的产品
+                        categoryName = answers[0]['category.name']
+                        recommend_service = []
+                        sql = f"MATCH (t:`商品类别`)-[r:`推荐业务`]->(c:`信用卡`) WHERE t.name = '{categoryName}' RETURN c"
+                        result = self.g.run(sql)
+                        # TODO 待改造为通用逻辑
+                        for record in result:
+                            card = result['c']
+                            final_answer.append(
+                                f"该用户适合推荐信用卡:{card['name']}")
+                            final_answer.append(f"该卡详细信息为:{card['description']}")
 
-                    final_answer = answerTemplates[i].format(answers[0]['payer.name'], answers[0]['category.name'])
-        # 遍历预先定义好的questionType中每个元素
-        for i in range(len(questionType)):
-            # 如果该问题的"实体类型_问题类型"包含在预先定义好的questionType这个例表中
-            if question_type==questionType[i]:
-                item1_set=set()
-                item2=''
-                # 遍历answers中的每个元素
-                for answer in answers:
-                    print(888888888888888888888888888888888, answer)
-                    # item1_set用于存放例如篮球这样的答案
-                    item1_set.add(answer['商品类别'])
-                    # item2用于存放原有的实体
-                    item2 = answer['付款人姓名']
-                # 将item_set中的每个元素转换为字符串，并使用逗号连接起来形成新的字符串
-                item1 = ','.join(item1_set)
-                print(999999999999999999999999999999, item1)
-                print("item166666666666666666666666666", item1)
-                # 前面的i可以定位是第几类问题，然后该类问题的回答模板也对应第i + 1个answerTemple中的元素
-                template = f'{item2}{answerTemple[i]}{item1}。'
-                final_answer = template
-                if(i == 2):
-                    template = f'没问题，{item2}购买最多的商品类别是{item1}，推荐广州银行饭卡白金信用卡，其详细介绍如下面网址：https://ccmp.creditcard.gzcb.com.cn。'
-                    final_answer = template
+                        final_answer = answerTemplates[i].format(answers[0]['payer.name'], answers[0]['category.name'])
+                # 遍历预先定义好的questionType中每个元素
+                for i in range(len(questionType)):
+                    # 如果该问题的"实体类型_问题类型"包含在预先定义好的questionType这个例表中
+                    if question_type==questionType[i]:
+                        item1_set=set()
+                        item2=''
+                        # 遍历answers中的每个元素
+                        for answer in answers:
+                            print(888888888888888888888888888888888, answer)
+                            # item1_set用于存放例如篮球这样的答案
+                            item1_set.add(answer['商品类别'])
+                            # item2用于存放原有的实体
+                            item2 = answer['付款人姓名']
+                        # 将item_set中的每个元素转换为字符串，并使用逗号连接起来形成新的字符串
+                        item1 = ','.join(item1_set)
+                        print(999999999999999999999999999999, item1)
+                        print("item166666666666666666666666666", item1)
+                        # 前面的i可以定位是第几类问题，然后该类问题的回答模板也对应第i + 1个answerTemple中的元素
+                        template = f'{item2}{answerTemple[i]}{item1}。'
+                        final_answer = template
+                        if(i == 2):
+                            template = f'没问题，{item2}购买最多的商品类别是{item1}，推荐广州银行饭卡白金信用卡，其详细介绍如下面网址：https://ccmp.creditcard.gzcb.com.cn。'
+                            final_answer = template
         # final_answer就是最后会显示出来的回答
         return final_answer
 
