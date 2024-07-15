@@ -7,18 +7,18 @@ class findrelation_base_keywords:
     """
     def __init__(self):
         # 问句疑问词
-        self.type=['类别']
-        self.place=['哪里']
-        self.recommend=['推荐']
+        # self.type=['类别']
+        # self.place=['哪里']
+        # self.recommend=['推荐']
         self.wd_dict = dict()
 
         '''引入关键字'''
         for qw in question_words:
             for keyword in qw["keywords"]:
                 self.wd_dict[keyword] = qw["label"]
-        for wd in self.type:self.wd_dict[wd]='UNtype'
-        for wd in self.place:self.wd_dict[wd]='UNplace'
-        for wd in self.recommend:self.wd_dict[wd]='UNrecommend'
+        # for wd in self.type:self.wd_dict[wd]='UNtype'
+        # for wd in self.place:self.wd_dict[wd]='UNplace'
+        # for wd in self.recommend:self.wd_dict[wd]='UNrecommend'
 
         print(self.wd_dict)
 

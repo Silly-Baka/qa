@@ -5,9 +5,6 @@ print('读取数据中......')
 df = pd.read_excel('./data.xlsx')
 print('读取数据完成')
 
-
-
-
 if __name__ == '__main__':
     entity_dict = {}
 
