@@ -6,36 +6,30 @@ class findrelation_base_keywords:
     """
     def __init__(self):
         # 问句疑问词
-        self.manager=['经理', '是谁', '基金经理']
-        self.index=['哪个指数', '所属指数', '指数是哪个']
-        self.scale=['资产规模', '资产', '规模']
-        self.fund=['基金有哪些', '管理的基金', '哪些基金']
-        self.company=['什么公司','哪些公司','公司有哪些','哪个公司','什么企业','哪些企业','企业有哪些','哪个企业', '基金公司', '公司是什么']
-        self.manager_qwds = ['高管', '经理']
-        self.scale_qwds = ['资产规模', '资产']
-        self.index_qwds = ['所属指数', '指数是什么']
-        self.performance_qwds = ['好不好', '好吗', '牛逼', '牛', '厉害', '蓝筹', '牛股', '怎样', '如何', '好么', '牛不', '屌', '评价', '评估', '表现']
+        self.type=['类别']
+        self.place=['哪里']
+        self.recommend=['推荐']
         self.wd_dict = dict()
 
-        for wd in self.manager:self.wd_dict[wd]='UNmanager'
-        for wd in self.index:self.wd_dict[wd]='UNindex'
-        for wd in self.scale:self.wd_dict[wd]='UNscale'
-        for wd in self.fund:self.wd_dict[wd]='UNfund'
-        for wd in self.company:self.wd_dict[wd]='UNcompany'
-        for wd in self.manager_qwds: self.wd_dict[wd] = 'UNmanager'
-        for wd in self.performance_qwds: self.wd_dict[wd] = 'UNperformance'
-        for wd in self.scale_qwds:self.wd_dict[wd] = 'UNscale'
-        for wd in self.index_qwds:self.wd_dict[wd] = 'UNindex'
+        for wd in self.type:self.wd_dict[wd]='UNtype'
+        for wd in self.place:self.wd_dict[wd]='UNplace'
+        for wd in self.recommend:self.wd_dict[wd]='UNrecommend'
+
+        print(self.wd_dict)
 
     def main(self,sentence):
         relationtype=set()
+        # 遍历关键字规则库中的每个key
         for wd in self.wd_dict.keys():
+            # 如果关键字规则库中的key包含在句子中
             if wd in sentence:
+                # 则将该key所对应的问题的类型加入进relationtype这个set中
+                # set可以去除重复，所以relationtype中不会有重复元素
                 relationtype.add(self.wd_dict[wd])
         return list(relationtype)
 
 if __name__ == "__main__":
     finder = findrelation_base_keywords()
-    question = '华安上证180ETF所属基金公司是哪个'
+    question = '张三的爱好是什么？'
     r = finder.main(question)
     print(r)

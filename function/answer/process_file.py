@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 print('读取数据中......')
-df = pd.read_excel('./政策查询.xls')
+df = pd.read_excel('./data.xlsx')
 print('读取数据完成')
 
 
@@ -11,26 +11,16 @@ print('读取数据完成')
 if __name__ == '__main__':
     entity_dict = {}
 
-    col_name = ['ZCMC', 'FWJG', 'GWZL', 'ZCJB', 'ZCFL', 'ZTC', 'GJC', 'ZCZX_LXR', 'ZCZX_LXDH', 'ZCGS', 'ZCZW', 'SBTJ',
-                'SBFS', 'SBDZ', 'SBLC']
+    col_name = ['name', 'hobby',  'hometown', 'live', 'person']
 
-    A = df['ZCMC']
-    B = df['FWJG']
-    C = df['GWZL']
-    D = df['ZCJB']
-    E = df['ZCFL']
-    F = df['ZTC']
-    G = df['GJC']
-    H = df['ZCZX_LXR']
-    I = df['ZCZX_LXDH']
-    J = df['ZCGS']
-    K = df['ZCZW']
-    L = df['SBTJ']
-    M = df['SBFS']
-    N = df['SBDZ']
-    O = df['SBLC']
+    A = df['name']
+    B = df['hobby']
+    # C = df['homemate']
+    D = df['hometown']
+    E = df['live']
+    F = df['person']
 
-    entity_list = [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O]
+    entity_list = [A, B, D, E, F]
 
     one = []
 
