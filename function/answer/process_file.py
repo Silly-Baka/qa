@@ -35,7 +35,7 @@ if __name__ == '__main__':
     with open('./entity.txt', 'w', encoding='utf-8') as file:
         json.dump(entity_dict, file, ensure_ascii=False)
 
-    with open('./1.txt', 'w', encoding='utf-8') as f:
+    with open('segment_word.txt', 'w', encoding='utf-8') as f:
         for o in one:
             f.write(str(o) + '\n')
             f.write('\n')

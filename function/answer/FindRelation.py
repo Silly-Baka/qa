@@ -1,3 +1,4 @@
+from function.answer.utils import question_words
 
 
 class findrelation_base_keywords:
@@ -11,6 +12,10 @@ class findrelation_base_keywords:
         self.recommend=['推荐']
         self.wd_dict = dict()
 
+        '''引入关键字'''
+        for qw in question_words:
+            for keyword in qw["keywords"]:
+                self.wd_dict[keyword] = qw["label"]
         for wd in self.type:self.wd_dict[wd]='UNtype'
         for wd in self.place:self.wd_dict[wd]='UNplace'
         for wd in self.recommend:self.wd_dict[wd]='UNrecommend'

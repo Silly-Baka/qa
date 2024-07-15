@@ -22,13 +22,12 @@ class FindEntity_base_similarity:
         with open(entity_path, 'r', encoding='utf-8') as f:
             self.entity_type = json.load(f)
 
-    def stop(self, sentence):  # 去掉停止词
-        jieba.load_userdict(one_path)
-        # 这里wordlist已经分词了
+    def stop (self,sentence):          # 去掉停止词
+        jieba.load_userdict(segment_word_path)   # 加载个人分词词典
         wordlist = list(jieba.cut(sentence))
-        # wordlist = fool.cut(sentence)[0]            # 分词
-        stopwords = ['购买', '最多', '的', '是', '什么', '最常', '进行', '消费', '可以', '为', '做', '一些', '嘛']
-        a = copy.deepcopy(wordlist)
+        #wordlist = fool.cut(sentence)[0]            # 分词
+        stopwords=['有', '属于','哪里','哪些', '和','在','的']   # 停止词列表
+        a=copy.deepcopy(wordlist)
         for item in a:
             if item in stopwords:
                 wordlist.remove(item)
@@ -77,12 +76,13 @@ class FindEntity_base_similarity:
         return final_dict
 
 
-if __name__ == '__main__':
-    finder = FindEntity_base_similarity()
-    question = '张三的爱好是什么？'
-    # question = '新开普是什么行业'
-    # f2=FindEntity_base_AC()
-    # e2=f2.main(question)
-    # print(e2,'ac')
-    entity = finder.main(question)
-    print(entity, 'xiangsidu1')
+
+if __name__=='__main__':
+        finder=FindEntity_base_similarity()
+        question = '黄嘉桓购买最多的商品类别是什么？'
+        # question = '新开普是什么行业'
+        # f2=FindEntity_base_AC()
+        # e2=f2.main(question)
+        # print(e2,'ac')
+        entity = finder.main(question)
+        print(entity, 'xiangsidu1')
