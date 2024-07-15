@@ -5,11 +5,12 @@ import json
 from py2neo import Graph
 
 from function.answer.utils import entity_path
+from utils import *
 
 
 class EntityWordUtils:
     def __init__(self):
-        self.graph = Graph("http://localhost:7474/", auth = ("neo4j", "hjh123123"))
+        self.graph = Graph(neo4j_address, auth = (neo4j_username, neo4j_password))
         self.json_dict = dict()
         self.get_all_labels_names()
 

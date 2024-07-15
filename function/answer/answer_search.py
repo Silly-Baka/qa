@@ -1,13 +1,13 @@
 from py2neo import Graph
 from function.answer import question_classifier
 from function.answer import generate_sqls
-from function.answer.utils import questionTypes, answerTemplates
+from function.answer.utils import *
 
 from .utils import *
 
 class answerearcher:
     def __init__(self):
-        self.g = Graph("http://localhost:7474/", auth = ("neo4j", "hjh123123"))   # 修改对应的neo4j用户名和密码
+        self.g = Graph(neo4j_address, auth = (neo4j_username, neo4j_password))   # 修改对应的neo4j用户名和密码
 
         # self.num_limit = 20
 
@@ -64,6 +64,22 @@ class answerearcher:
                 # template = f'{item2}{answerTemplates[i]}{item1}'
                 # final_answer = template
                 if question_type == '付款方_商品类别_most_type':
+                    final_answer.append(answerTemplates[i].format(answers[0]['payer.name'], answers[0]['category.name']))
+                    # TODO 这里写推荐的逻辑，如常买类别为零食、餐饮等，就推荐饭卡信用卡并介绍相关的信息
+                    #      最好是在图里新增这样的数据， 零食节点 ——> [:适合推荐的业务] ——> 信用卡节点
+
+                    # 从neo4j中找出该商品类型适合推荐的产品
+                    categoryName = answers[0]['category.name']
+                    recommend_service = []
+                    sql = f"MATCH (t:`商品类别`)-[r:`推荐业务`]->(c:`信用卡`) WHERE t.name = '{categoryName}' RETURN c"
+                    result = self.g.run(sql)
+                    # TODO 待改造为通用逻辑
+                    for record in result:
+                        card = result['c']
+                        final_answer.append(
+                            f"该用户适合推荐信用卡:{card['name']}")
+                        final_answer.append(f"该卡详细信息为:{card['description']}")
+
                     final_answer = answerTemplates[i].format(answers[0]['payer.name'], answers[0]['category.name'])
         # 遍历预先定义好的questionType中每个元素
         for i in range(len(questionType)):
@@ -101,7 +117,7 @@ class answerearcher:
 
 
 if __name__ == "__main__":
-    question='黄嘉桓购买最多的商品类别是什么？'
+    question='郑辛茹购买最多的商品类别是什么？'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)
