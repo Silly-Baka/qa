@@ -57,7 +57,7 @@ def classify(question):
     # question_types这个key里面存放question_types这个"实体类型_问题类型"这样的全排列组合的列表
     return data #{'args': {'珠海科德电子有限公司': ['comapny']}, 'question_types': ['comapny_belong_concept']}
 
-# 根据上一个问题的关键字，递归生成所有问题组合
+# 根据上一个问题的实体列表，递归生成所有问题组合
 def generate_combinations(current, remaining, relation_type, question_types):
     if not remaining:
         # 如果没有剩余元素，添加到结果集中

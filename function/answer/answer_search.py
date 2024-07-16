@@ -65,7 +65,7 @@ class answerearcher:
                             card = record['c']
                             final_answer.append(
                                 f"该用户适合推荐信用卡:{card['name']}")
-                            final_answer.append(f"该卡详细信息为:{card['description']}")
+                            final_answer.append(f"{card['description']}")
 
                 # 遍历预先定义好的questionType中每个元素
                 # for i in range(len(questionType)):

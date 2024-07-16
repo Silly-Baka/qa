@@ -78,4 +78,5 @@ def generate_sql(data):
                     # 字典的格式如下
                     # {'question_type': 'name_UNhobby', 'sql': ["MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"]}s
                     sqls.append({'question_type': quetions, 'sql': sql})
+        print(sqls)
     return sqls
