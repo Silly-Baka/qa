@@ -51,14 +51,14 @@ class answerearcher:
 
             for i in range(len(utils.questionTypes)):
                 if question_type== utils.questionTypes[i]:
-                    if question_type == '付款方_most_type':
+                    if question_type == '用户_most_type':
                         payerName = answers[0]['payer.name']
                         categoryName = answers[0]['category.name']
                         final_answer.append(utils.answerTemplates[i].format(payerName, categoryName))
                         # 将商品类别信息保存
                         utils.pre_entity_types[categoryName] = '商品类别'
 
-                    if question_type == '付款方_recommend':
+                    if question_type == '用户_商品类别_recommend':
                         # DONE 这里写推荐的逻辑，如常买类别为零食、餐饮等，就推荐饭卡信用卡并介绍相关的信息
                         #      最好是在图里新增这样的数据， 零食节点 ——> [:适合推荐的业务] ——> 信用卡节点
                         for record in answers:
@@ -75,7 +75,7 @@ class answerearcher:
                             f"适合给这些用户推荐以下业务：{'，'.join(set(services))}"
                         )
 
-                    if question_type == 'parent':
+                    if question_type == 'NONE_parent':
                         payers = []
                         for record in answers:
                             payer = record['payer']
@@ -85,7 +85,7 @@ class answerearcher:
                             f"以下用户与疑似亲属有过相关流水记录: {'，'.join(payers)}"
                         )
                         utils.pre_entity_types['亲属'] = '亲属'   # 作为亲属相关问题的标志位
-                    if question_type == '付款方_parent':
+                    if question_type == '用户_parent':
                         receivers = []
                         for record in answers:
                             receiver = record['receiver']
@@ -136,7 +136,7 @@ class answerearcher:
 
 
 if __name__ == "__main__":
-    question='有什么客户与疑似亲属有过相关的流水记录？'
+    question='黄嘉桓最常购买的商品类别？'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)
@@ -147,7 +147,18 @@ if __name__ == "__main__":
     ans=searcher.main(b)
     print('ans:',ans)
 
-    question = '适合给这些客户推荐什么业务'
+    question = '汤继锐疑似亲属的相关信息'
+    a=question_classifier.classify(question)
+    print('a:',a)
+    b=generate_sqls.generate_sql(a)
+    print('sqls:', b)
+    searcher = answerearcher()
+    # b例如[{'question_type': 'name_UNhobby', 'sql': ["MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"]}]
+    # b就为非经典的sql语句
+    ans=searcher.main(b)
+    print('ans:',ans)
+
+    question = '这些用户适合推荐什么业务'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)

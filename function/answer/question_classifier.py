@@ -9,21 +9,21 @@ def classify(question):
     relation_types = relationfinder.main(question)  # str
     # relation_type会得到一个列表，列表中存储了无重复的问题类型字符串
     # relation_type例如['UNhobby']
-    # relation_type = relationfinder.main(question)  # str
-    # print('relation_type:', relation_type)
 
     # 查询相关的实体标签，作为参数构造sql，将被构造为问题标签
     entity_types = entityfinder.main(question)
 
-    # print('entity_type:', entity_type)
-
-    # if not entity_types and not utils.pre_entity_types :
-    #     return {}
+    if len(entity_types) == 0 and len(utils.pre_entity_types) == 0:
+        entity_types['NONE'] = 'NONE'
 
     # 问题类型列表
     question_types = set()
 
     # 参数列表_问题标签 --> 组合成问题类型，可用于索引到实际的处理逻辑
+
+
+    # 清除上一个问题中的NONE标签，避免bug
+    utils.pre_entity_types.pop('NONE', None)
 
     # DONE 对上一次的关键词进行全排列再与问题标签组合
     values = list(utils.pre_entity_types.values())

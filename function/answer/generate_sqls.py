@@ -25,7 +25,7 @@ def generate_sql(data):
         #             f"MATCH(m:{headTag[j]})-[r:{headTag[j]}_{tailTag[j]}]->(n:{tailTag[j]}) where m.name='{i}' return n.name, m.name"
         #             for i in args.keys()]
 
-        print(22222222222222222222222222222222, quetions)
+        print('questions:'+quetions)
         # questionType是列表，包含了事先准备的所有准备好的"实体类型_问题类型"的组合
         for j in range(len(questionTypes)):
             # 如果questions例如name_UNhobby等于questionType中的某个元素，即questionType中的某个元素此时为nameUNhobby
@@ -35,20 +35,20 @@ def generate_sql(data):
                 # headTag宽泛表示实体类型
                 # tailTag宽泛表示问题类型
 
-                # TODO: 待完善代码逻辑、匹配逻辑（关键字、问题类型等）
-                if quetions == '付款方_most_type':
+                # todo: 待完善代码逻辑、匹配逻辑（关键字、问题类型等）
+                if quetions == '用户_most_type':
                     name = ''
                     for key in args.keys():
-                        if args[key] == '付款方':
+                        if args[key] == '用户':
                             name = key
                             break
                     sql = [
-                        f"MATCH (payer:付款方 {{name: '{name}'}})-[:付款]->(transaction:流水)-[:属性]->(category:商品类别)\
+                        f"MATCH (payer:用户 {{name: '{name}'}})-[:付款]->(transaction:流水)-[:流水信息]->(category:商品类别)\
                         RETURN payer.name, category.name, COUNT(transaction) AS TransactionsCount\
                         ORDER BY TransactionsCount DESC\
                         LIMIT 1"
                     ]
-                if quetions == '付款方_recommend':
+                if quetions == '用户_商品类别_recommend':
                     for key in args.keys():
                         if args[key] == '商品类别':
                             categoryName = key
@@ -59,20 +59,20 @@ def generate_sql(data):
                     sql = [
                         f"MATCH (q:`亲属关系`)-[:`推荐业务`]->(p) return p"
                     ]
-                if quetions == 'parent':
+                if quetions == 'NONE_parent':
                     sql = [
                         f"MATCH (payer:`付款方`)-[:`亲属`]->(q:`亲属关系`) return payer"
                     ]
-                if quetions == '付款方_parent':
+                if quetions == '用户_parent':
                     # DONE 待补充逻辑
-                    name = ''
                     for key in args.keys():
-                        name = key
-                        break
-                    sql = [
-                        f"MATCH  (payer:`付款方`)-[:`亲属`]->(:`亲属关系`)-[:`亲属`]->(receiver:`收款方`)"
-                        f" where payer.name = '{name}' return receiver"
-                    ]
+                        if args[key] == '用户':
+                            name = key
+                            sql = [
+                                f"MATCH  (payer:`用户`)-[:`亲属`]->(:`亲属关系`)-[:`亲属`]->(receiver:`用户`)"
+                                f" where payer.name = '{name}' return receiver"
+                            ]
+                            break
 
                 if(quetions == 'payer_UNtype'):
                     sql = [
