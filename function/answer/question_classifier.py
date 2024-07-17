@@ -17,8 +17,8 @@ def classify(question):
 
     # print('entity_type:', entity_type)
 
-    if not entity_types and not utils.pre_entity_types:
-        return {}
+    # if not entity_types and not utils.pre_entity_types :
+    #     return {}
 
     # 问题类型列表
     question_types = set()

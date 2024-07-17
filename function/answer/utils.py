@@ -6,31 +6,30 @@ segment_word_path = 'C:\\Users\\86176\\Desktop\\公司课题暂用\\qa\\function
 # tailTag = ['hobby', 'homemate', 'hometown', 'live', 'person']
 # answerTemplates = ['的爱好是：', '的室友是：', '的家乡是：', '住在：', '住的人数有：']
 
-questionTypes = ['付款方_most_type', '付款方_recommend']
+questionTypes = ['付款方_most_type', '付款方_recommend', 'parent', '付款方_parent', '亲属_recommend']
 answerTemplates = ['{}购买最多的商品类别为{}']
 
 # 疑问词，每个对象是一个问题的标签以及关键字列表
 question_words = [
     {
         "label": "most_type",
-        "keywords": ['最多', '购买', '商品类别']
+        "keywords": ['最多', '商品类别']
     },
-    # {
-    #     "label": "UNtype",
-    #     "keywords": ['类别']
-    # },
     {
         "label": "UNplace",
         "keywords": ['哪里']
     },
-    # {
-    #     "label": "UNrecommend",
-    #     "keywords": ['推荐']
-    # },
     {
         "label": "recommend",
         "keywords": ['适合', '推荐']
-    }
+    },
+    {
+        "label": "parent",
+        "keywords": ['疑似亲属', '亲属']
+        # 有什么客户与疑似亲属有过相关的流水记录？
+        # 1、xxx客户的疑似亲属相关信息？
+        # 2、适合给这些客户推荐什么业务？
+    },
 ]
 
 # neo4j相关信息

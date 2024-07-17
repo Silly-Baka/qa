@@ -59,13 +59,46 @@ class answerearcher:
                         utils.pre_entity_types[categoryName] = '商品类别'
 
                     if question_type == '付款方_recommend':
-                        # TODO 这里写推荐的逻辑，如常买类别为零食、餐饮等，就推荐饭卡信用卡并介绍相关的信息
+                        # DONE 这里写推荐的逻辑，如常买类别为零食、餐饮等，就推荐饭卡信用卡并介绍相关的信息
                         #      最好是在图里新增这样的数据， 零食节点 ——> [:适合推荐的业务] ——> 信用卡节点
                         for record in answers:
                             card = record['c']
                             final_answer.append(
                                 f"该用户适合推荐信用卡:{card['name']}")
                             final_answer.append(f"{card['description']}")
+                    if question_type == '亲属_recommend':
+                        services = []
+                        for record in answers:
+                            service = record['p']
+                            services.append(service['name'])
+                        final_answer.append(
+                            f"适合给这些用户推荐以下业务：{'，'.join(set(services))}"
+                        )
+
+                    if question_type == 'parent':
+                        payers = []
+                        for record in answers:
+                            payer = record['payer']
+                            payers.append(payer['name'])
+                        print(payers)
+                        final_answer.append(
+                            f"以下用户与疑似亲属有过相关流水记录: {'，'.join(payers)}"
+                        )
+                        utils.pre_entity_types['亲属'] = '亲属'   # 作为亲属相关问题的标志位
+                    if question_type == '付款方_parent':
+                        receivers = []
+                        for record in answers:
+                            receiver = record['receiver']
+                            receivers.append({
+                                "用户名": receiver['name'],
+                                "用户电话": '1xxxxxxx',
+                                "其余信息": '暂无信息来源'
+                            })
+                        print(receiver)
+                        final_answer.append(
+                            f"该用户的疑似亲属如下: {receivers}"
+                        )
+                        utils.pre_entity_types['亲属'] = '亲属'  # 作为亲属相关问题的标志位
 
                 # 遍历预先定义好的questionType中每个元素
                 # for i in range(len(questionType)):
@@ -103,7 +136,7 @@ class answerearcher:
 
 
 if __name__ == "__main__":
-    question='郑辛茹购买最多的商品类别是什么？'
+    question='有什么客户与疑似亲属有过相关的流水记录？'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)
@@ -114,7 +147,7 @@ if __name__ == "__main__":
     ans=searcher.main(b)
     print('ans:',ans)
 
-    question = '她适合推荐一些什么业务?'
+    question = '适合给这些客户推荐什么业务'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)

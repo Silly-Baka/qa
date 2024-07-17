@@ -41,6 +41,7 @@ def generate_sql(data):
                     for key in args.keys():
                         if args[key] == '付款方':
                             name = key
+                            break
                     sql = [
                         f"MATCH (payer:付款方 {{name: '{name}'}})-[:付款]->(transaction:流水)-[:属性]->(category:商品类别)\
                         RETURN payer.name, category.name, COUNT(transaction) AS TransactionsCount\
@@ -48,12 +49,29 @@ def generate_sql(data):
                         LIMIT 1"
                     ]
                 if quetions == '付款方_recommend':
-                    categoryName = ''
                     for key in args.keys():
                         if args[key] == '商品类别':
                             categoryName = key
+                            sql = [
+                                f"MATCH (t:`商品类别`)-[r:`推荐业务`]->(c:`信用卡`) WHERE t.name = '{categoryName}' RETURN c"
+                            ]
+                if quetions == '亲属_recommend':
                     sql = [
-                        f"MATCH (t:`商品类别`)-[r:`推荐业务`]->(c:`信用卡`) WHERE t.name = '{categoryName}' RETURN c"
+                        f"MATCH (q:`亲属关系`)-[:`推荐业务`]->(p) return p"
+                    ]
+                if quetions == 'parent':
+                    sql = [
+                        f"MATCH (payer:`付款方`)-[:`亲属`]->(q:`亲属关系`) return payer"
+                    ]
+                if quetions == '付款方_parent':
+                    # DONE 待补充逻辑
+                    name = ''
+                    for key in args.keys():
+                        name = key
+                        break
+                    sql = [
+                        f"MATCH  (payer:`付款方`)-[:`亲属`]->(:`亲属关系`)-[:`亲属`]->(receiver:`收款方`)"
+                        f" where payer.name = '{name}' return receiver"
                     ]
 
                 if(quetions == 'payer_UNtype'):
