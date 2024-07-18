@@ -174,7 +174,7 @@ class answerearcher:
 
 
 if __name__ == "__main__":
-    question='黄嘉桓最常购买的商品类别？'
+    question='有什么客户与疑似亲属有过相关的流水记录？'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)

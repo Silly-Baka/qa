@@ -66,7 +66,7 @@ def generate_sql(data):
                     ]
                 if quetions == 'NONE_parent':
                     sql = [
-                        f"MATCH (payer:`付款方`)-[:`亲属`]->(q:`亲属关系`) return payer"
+                        f"MATCH (payer:`用户`)-[:`亲属`]->(q:`亲属关系`) return payer"
                     ]
                 if quetions == '用户_parent':
                     # DONE 待补充逻辑
@@ -125,5 +125,5 @@ def generate_sql(data):
                     # 字典的格式如下
                     # {'question_type': 'name_UNhobby', 'sql': ["MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"]}s
                     sqls.append({'question_type': quetions, 'sql': sql})
-        print(sqls)
+    print(sqls)
     return sqls
