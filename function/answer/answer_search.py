@@ -119,7 +119,7 @@ class answerearcher:
                             \n提供个性化的理财建议，帮助客户做出更理性的投资决策，从而提升交易活跃度和客户满意度。"""
                         )
 
-                    if(question_type == "金额区间_potential"):
+                    if(question_type == "区间人数占比_potential"):
                         proportion = (answers[0]['node.two'] + answers[0]['node.three'] + answers[0]['node.four'] + answers[0]['node.five']) / (answers[0]['node.one'] + answers[0]['node.two'] + answers[0]['node.three'] + answers[0]['node.four'] + answers[0]['node.five'] + answers[0]['node.six'] + answers[0]['node.seven']) * 100
                         proportion_2 = "{:.2f}".format(proportion)
                         final_answer.append(

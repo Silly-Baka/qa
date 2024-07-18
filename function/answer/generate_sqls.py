@@ -88,10 +88,10 @@ def generate_sql(data):
                     ]
                     print('理财产品SQL语言', sql)
 
-                if quetions == "金额区间_potential":
+                if quetions == "区间人数占比_potential":
                     name = ''
                     for key in args.keys():
-                        if args[key] == '金额区间':
+                        if args[key] == '区间人数占比':
                             name = key
                     sql = [
                         f"MATCH (node:区间人数占比 {{name: '{name}'}})\

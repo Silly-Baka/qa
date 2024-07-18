@@ -134,3 +134,6 @@ create (:养老险{name: '国寿臻鑫传家终身寿险'});
 create (:银行卡{name: '醒目仔卡', description: '我行专门为18周岁以下青少年量身定制的专属借记卡，该卡除具有一卡通所有金融功能外，还可与监护人借记卡绑定，签约多种储蓄计划'});
 match (a: `亲属关系`), (b: `养老险`) create (a)-[:推荐业务]->(b);
 match (c: `银行卡`),(q: `亲属关系`) where c.name = '醒目仔卡' create (q)-[:推荐业务]->(c);
+
+CREATE (cc1: 交易金额 {name: '理财', first_quarter: 174097400, second_quarter: 4890490})
+CREATE (cc2: 区间人数占比 {name: '区间', one: 148, two: 226, three: 276, four: 335, five: 247, six: 163, seven: 86})
