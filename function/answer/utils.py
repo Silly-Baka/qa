@@ -6,27 +6,19 @@ segment_word_path = 'C:\\Users\\Supre_yuan\\Desktop\\qa\\function\\answer\\segme
 # tailTag = ['hobby', 'homemate', 'hometown', 'live', 'person']
 # answerTemplates = ['的爱好是：', '的室友是：', '的家乡是：', '住在：', '住的人数有：']
 
-questionTypes = ['付款方_most_type', '付款方_recommend', '交易金额_analysis', "金额区间_potential"]
+questionTypes = ['用户_most_type', '用户_商品类别_recommend', 'NONE_parent', '用户_parent', '亲属_recommend', '交易金额_analysis', "金额区间_potential"]
 answerTemplates = ['{}购买最多的商品类别为{}']
 
 # 疑问词，每个对象是一个问题的标签以及关键字列表
 question_words = [
     {
         "label": "most_type",
-        "keywords": ['最多', '购买', '商品类别']
+        "keywords": ['最多', '商品类别', '商品类型']
     },
-    # {
-    #     "label": "UNtype",
-    #     "keywords": ['类别']
-    # },
     {
         "label": "UNplace",
         "keywords": ['哪里']
     },
-    # {
-    #     "label": "UNrecommend",
-    #     "keywords": ['推荐']
-    # },
     {
         "label": "recommend",
         "keywords": ['适合', '推荐']
@@ -38,6 +30,13 @@ question_words = [
     {
         "label": "potential",
         "keywords": ["潜力"]
+    },
+    {
+        "label": "parent",
+        "keywords": ['疑似亲属', '亲属']
+        # 有什么客户与疑似亲属有过相关的流水记录？
+        # 1、xxx客户的疑似亲属相关信息？
+        # 2、适合给这些客户推荐什么业务？
     }
 ]
 

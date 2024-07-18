@@ -1,0 +1,136 @@
+match (n) detach delete n;
+
+LOAD CSV FROM 'file:///hjh0710.csv' AS row
+WITH row,
+     CASE WHEN row[0] IS NOT NULL THEN row[0] ELSE '未知id' END AS tran_id,
+     CASE WHEN row[1] IS NOT NULL THEN row[1] ELSE '未知付款方' END AS payer_name,
+     CASE WHEN row[2] IS NOT NULL THEN row[2] ELSE '未知id' END AS payer_id,
+     CASE WHEN row[3] IS NOT NULL THEN row[3] ELSE '未知收款方' END AS receiver_name,
+     CASE WHEN row[4] IS NOT NULL THEN row[4] ELSE '未知id' END AS receiver_id,
+     CASE WHEN row[5] IS NOT NULL THEN row[5] ELSE '无关系' END AS relation_name,
+     CASE WHEN row[6] IS NOT NULL THEN row[6] ELSE '未知日期' END AS tran_date,
+     CASE WHEN row[7] IS NOT NULL THEN row[7] ELSE 0 END AS transaction_amount,
+     CASE WHEN row[10] IS NOT NULL THEN row[10] ELSE '未知商品类别' END AS type_name,
+     CASE WHEN row[12] IS NOT NULL THEN row[12] ELSE '无详细摘要' END AS description_name
+
+MERGE (payer:用户 {name: payer_name})
+MERGE (receiver:用户 {name: receiver_name})
+MERGE (tran:流水 {name: '流水'+tran_id, 交易金额: transaction_amount})
+MERGE (type:商品类别 {name: type_name})
+MERGE (date:交易日期 {name: tran_date})
+MERGE (description: 交易摘要 {name: description_name})
+MERGE (payer)-[r1:付款]->(tran)
+MERGE (tran)-[r2:收款]->(receiver)
+MERGE (tran)-[:流水信息]->(type)
+MERGE (tran)-[:流水信息]->(date)
+MERGE (tran)-[:流水信息]->(description)
+WITH relation_name, payer, receiver
+WHERE relation_name = '亲属关系'
+MERGE (relation:亲属关系 {name: payer.name+'亲属'})
+MERGE (payer)-[:亲属]->(relation)
+MERGE (relation)-[:亲属]->(receiver);
+
+LOAD CSV FROM 'file:///zxr0710.csv' AS row
+WITH row,
+     CASE WHEN row[0] IS NOT NULL THEN row[0] ELSE '未知id' END AS tran_id,
+     CASE WHEN row[1] IS NOT NULL THEN row[1] ELSE '未知付款方' END AS payer_name,
+     CASE WHEN row[2] IS NOT NULL THEN row[2] ELSE '未知id' END AS payer_id,
+     CASE WHEN row[3] IS NOT NULL THEN row[3] ELSE '未知收款方' END AS receiver_name,
+     CASE WHEN row[4] IS NOT NULL THEN row[4] ELSE '未知id' END AS receiver_id,
+     CASE WHEN row[5] IS NOT NULL THEN row[5] ELSE '无关系' END AS relation_name,
+     CASE WHEN row[6] IS NOT NULL THEN row[6] ELSE '未知日期' END AS tran_date,
+     CASE WHEN row[7] IS NOT NULL THEN row[7] ELSE 0 END AS transaction_amount,
+     CASE WHEN row[10] IS NOT NULL THEN row[10] ELSE '未知商品类别' END AS type_name,
+     CASE WHEN row[12] IS NOT NULL THEN row[12] ELSE '无详细摘要' END AS description_name
+
+MERGE (payer:用户 {name: payer_name})
+MERGE (receiver:用户 {name: receiver_name})
+MERGE (tran:流水 {name: '流水'+tran_id, 交易金额: transaction_amount})
+MERGE (type:商品类别 {name: type_name})
+MERGE (date:交易日期 {name: tran_date})
+MERGE (description: 交易摘要 {name: description_name})
+MERGE (payer)-[r1:付款]->(tran)
+MERGE (tran)-[r2:收款]->(receiver)
+MERGE (tran)-[:流水信息]->(type)
+MERGE (tran)-[:流水信息]->(date)
+MERGE (tran)-[:流水信息]->(description)
+WITH relation_name, payer, receiver
+WHERE relation_name = '亲属关系'
+MERGE (relation:亲属关系 {name: payer.name+'亲属'})
+MERGE (payer)-[:亲属]->(relation)
+MERGE (relation)-[:亲属]->(receiver);
+
+LOAD CSV FROM 'file:///qbx0710.csv' AS row
+WITH row,
+     CASE WHEN row[0] IS NOT NULL THEN row[0] ELSE '未知id' END AS tran_id,
+     CASE WHEN row[1] IS NOT NULL THEN row[1] ELSE '未知付款方' END AS payer_name,
+     CASE WHEN row[2] IS NOT NULL THEN row[2] ELSE '未知id' END AS payer_id,
+     CASE WHEN row[3] IS NOT NULL THEN row[3] ELSE '未知收款方' END AS receiver_name,
+     CASE WHEN row[4] IS NOT NULL THEN row[4] ELSE '未知id' END AS receiver_id,
+     CASE WHEN row[5] IS NOT NULL THEN row[5] ELSE '无关系' END AS relation_name,
+     CASE WHEN row[6] IS NOT NULL THEN row[6] ELSE '未知日期' END AS tran_date,
+     CASE WHEN row[7] IS NOT NULL THEN row[7] ELSE 0 END AS transaction_amount,
+     CASE WHEN row[10] IS NOT NULL THEN row[10] ELSE '未知商品类别' END AS type_name,
+     CASE WHEN row[12] IS NOT NULL THEN row[12] ELSE '无详细摘要' END AS description_name
+
+MERGE (payer:用户 {name: payer_name})
+MERGE (receiver:用户 {name: receiver_name})
+MERGE (tran:流水 {name: '流水'+tran_id, 交易金额: transaction_amount})
+MERGE (type:商品类别 {name: type_name})
+MERGE (date:交易日期 {name: tran_date})
+MERGE (description: 交易摘要 {name: description_name})
+MERGE (payer)-[r1:付款]->(tran)
+MERGE (tran)-[r2:收款]->(receiver)
+MERGE (tran)-[:流水信息]->(type)
+MERGE (tran)-[:流水信息]->(date)
+MERGE (tran)-[:流水信息]->(description)
+WITH relation_name, payer, receiver
+WHERE relation_name = '亲属关系'
+MERGE (relation:亲属关系 {name: payer.name+'亲属'})
+MERGE (payer)-[:亲属]->(relation)
+MERGE (relation)-[:亲属]->(receiver);
+
+LOAD CSV FROM 'file:///tjr0710.csv' AS row
+WITH row,
+     CASE WHEN row[0] IS NOT NULL THEN row[0] ELSE '未知id' END AS tran_id,
+     CASE WHEN row[1] IS NOT NULL THEN row[1] ELSE '未知付款方' END AS payer_name,
+     CASE WHEN row[2] IS NOT NULL THEN row[2] ELSE '未知id' END AS payer_id,
+     CASE WHEN row[3] IS NOT NULL THEN row[3] ELSE '未知收款方' END AS receiver_name,
+     CASE WHEN row[4] IS NOT NULL THEN row[4] ELSE '未知id' END AS receiver_id,
+     CASE WHEN row[5] IS NOT NULL THEN row[5] ELSE '无关系' END AS relation_name,
+     CASE WHEN row[6] IS NOT NULL THEN row[6] ELSE '未知日期' END AS tran_date,
+     CASE WHEN row[7] IS NOT NULL THEN row[7] ELSE 0 END AS transaction_amount,
+     CASE WHEN row[10] IS NOT NULL THEN row[10] ELSE '未知商品类别' END AS type_name,
+     CASE WHEN row[12] IS NOT NULL THEN row[12] ELSE '无详细摘要' END AS description_name
+
+MERGE (payer:用户 {name: payer_name})
+MERGE (receiver:用户 {name: receiver_name})
+MERGE (tran:流水 {name: '流水'+tran_id, 交易金额: transaction_amount})
+MERGE (type:商品类别 {name: type_name})
+MERGE (date:交易日期 {name: tran_date})
+MERGE (description: 交易摘要 {name: description_name})
+MERGE (payer)-[r1:付款]->(tran)
+MERGE (tran)-[r2:收款]->(receiver)
+MERGE (tran)-[:流水信息]->(type)e
+MERGE (tran)-[:流水信息]->(date)
+MERGE (tran)-[:流水信息]->(description)
+WITH relation_name, payer, receiver
+WHERE relation_name = '亲属关系'
+MERGE (relation:亲属关系 {name: payer.name+'亲属'})
+MERGE (payer)-[:亲属]->(relation)
+MERGE (relation)-[:亲属]->(receiver);
+
+create (c1: 信用卡{name: '饭卡白金信用卡', description: ':该卡首年免年费，早餐返现，满10元返5元；午晚餐返现，满100元返50元；天天刷天天返，最高388元。选择饭卡白金信用卡，尽享各路美食'});
+create (c2: 信用卡{name: '广州银行玩儿卡', description: '该卡首年免年费，并每日返现，最高可达388元。无论是品尝美食、还是尽情玩乐，每月还可自由选择各种权益，满足不同需求。'});
+match (t: `商品类别`),(c: `信用卡`) where t.name = '零食' and c.name='饭卡白金信用卡' create (t)-[:推荐业务]->(c);
+match (t: `商品类别`),(c: `信用卡`) where t.name = '娱乐' and c.name='广州银行玩儿卡' create (t)-[:推荐业务]->(c);
+match (c: `信用卡`) where c.name = '饭卡白金信用卡' set c.description = '该卡首年免年费，早餐返现，满10元返5元；午晚餐返现，满100元返50元；天天刷天天返，最高388元。选择饭卡白金信用卡，尽享各路美食';
+match (c: `信用卡`) where c.name = '广州银行玩儿卡' set c.description = '该卡首年免年费，并每日返现，最高可达388元。无论是品尝美食、还是尽情玩乐，每月还可自由选择各种权益，满足不同需求';
+
+create (:养老险{name: '光大永明乐享养老年金保险'});
+create (:养老险{name: '人保寿险臻盈一生终身寿险'});
+create (:养老险{name: '光大永明光明至尊（瑞选版）终身寿险'});
+create (:养老险{name: '国寿臻鑫传家终身寿险'});
+create (:银行卡{name: '醒目仔卡', description: '我行专门为18周岁以下青少年量身定制的专属借记卡，该卡除具有一卡通所有金融功能外，还可与监护人借记卡绑定，签约多种储蓄计划'});
+match (a: `亲属关系`), (b: `养老险`) create (a)-[:推荐业务]->(b);
+match (c: `银行卡`),(q: `亲属关系`) where c.name = '醒目仔卡' create (q)-[:推荐业务]->(c);

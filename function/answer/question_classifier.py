@@ -10,24 +10,22 @@ def classify(question):
     relation_types = relationfinder.main(question)  # str
     # relation_type会得到一个列表，列表中存储了无重复的问题类型字符串
     # relation_type例如['UNhobby']
-    # relation_type = relationfinder.main(question)  # str
-    # print('relation_type:', relation_type)
 
     # 查询相关的实体标签，作为参数构造sql，将被构造为问题标签
     # entity_types例如{'黄嘉桓': '付款方'}
     entity_types = entityfinder.main(question)
 
-    # print('entity_type:', entity_type)
-
-    # 如果没有检测到实体及实体类型并且没有上一个问题的实体列表，则返回空
-    # 否则，如果检测到实体及实体类型或者有上一个问题的实体列表，则不返回空
-    if not entity_types and not utils.pre_entity_types:
-        return {}
+    if len(entity_types) == 0 and len(utils.pre_entity_types) == 0:
+        entity_types['NONE'] = 'NONE'
 
     # 问题类型列表
     question_types = set()
 
     # 参数列表_问题标签 --> 组合成问题类型，可用于索引到实际的处理逻辑
+
+
+    # 清除上一个问题中的NONE标签，避免bug
+    utils.pre_entity_types.pop('NONE', None)
 
     # DONE 对上一次的关键词进行全排列再与问题标签组合
     values = list(utils.pre_entity_types.values())
@@ -38,15 +36,7 @@ def classify(question):
     # values例如['付款方', '商品类别']
     print(666666666666666666666666666, values)
     for relationType in relation_types:
-        # values例如['付款方', '商品类别']，relationType例如'recommend'，question_types例如['recommend']
-        print('----------------------------------------------------------------------------------')
-        print('current', '')
-        print('remaining', values)
-        print('relation_type', relationType)
-        print('question_types', question_types)
-        print('----------------------------------------------------------------------------------')
         generate_combinations('', values, relationType, question_types)
-        print('question_types_after', question_types)
 
     # 这一次的问题关键词与问题标签组合
     # TODO 需检查是否需要全排列，是否有可能乱序输入
@@ -75,8 +65,7 @@ def classify(question):
     # question_types这个key里面存放question_types这个"实体类型_问题类型"这样的全排列组合的列表
     return data #{'args': {'珠海科德电子有限公司': ['comapny']}, 'question_types': ['comapny_belong_concept']}
 
-# 根据上一个问题的关键字，递归生成所有问题组合
-
+# 根据上一个问题的实体列表，递归生成所有问题组合
 def generate_combinations(current, remaining, relation_type, question_types):
     """
     :param current: ''
