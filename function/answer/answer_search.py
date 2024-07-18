@@ -20,11 +20,19 @@ class answerearcher:
             question_type = sql_['question_type']
             # queries例如["MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"]
             queries = sql_['sql']
+            print(10101010101010101010101010101010, queries)
             # 假如输入例如"你好"这样的查不出关键字的情况，就将问题类型置为'payer_UNCommon'
             # 这种情况下，在后面的代码中会直接回复"你好，我是红棉助手，有什么可以帮您~"
             if(queries == '1'):
                 result = {'question_type': 'payer_UNCommon', 'answer': '1'}
                 return result
+
+            # # 在进行进一步询问理财产品的推广策略时使用
+            if(queries == "promotion"):
+                result = {'question_type': '交易金额_promotion', 'answer': 'promotion'}
+                print("yesyesyesyesyesyes")
+                return result
+
             answer= []
             # query是一条字符串，query例如"MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"
             for query in queries:
@@ -51,8 +59,16 @@ class answerearcher:
             # print(777777777777777777777777, answers)
             # 假如输入例如"你好"这样的查不出关键字的情况，就将问题类型置为'payer_UNCommon'
             # 这种情况下，在后面的代码中会直接回复"你好，我是红棉助手，有什么可以帮您~"
+
             if(answers == '1'):
                 final_answer = "你好，我是红棉助手，有什么可以帮您~"
+                return final_answer
+
+            if(answers == "promotion"):
+                final_answer = "理财交易金额在第二季度明显减少，可能受到市场利率变化或者季节性因素的影响。为了优化理财产品的推广策略，银行可以考虑：\
+                         \n加强针对第二季度客户的市场调研，了解其投资偏好和需求变化。\
+                         \n推出更具吸引力的理财产品和服务，以增加客户的投资参与度。\
+                         \n提供个性化的理财建议，帮助客户做出更理性的投资决策，从而提升交易活跃度和客户满意度。"
                 return final_answer
 
             for i in range(len(utils.questionTypes)):
@@ -112,11 +128,7 @@ class answerearcher:
                         #     f"第一个参数是{answers[0]['n.first_quarter']}, 第二个参数是{answers[0]['n.second_quarter']}"
                         # )
                         final_answer.append(
-                            f"""第一季度（1月至3月）理财交易金额总计: {answers[0]['n.first_quarter']}元。第二季度（4月至6月）理财交易金额总计: {answers[0]['n.second_quarter']}元。
-                            理财交易金额在第二季度明显减少，可能受到市场利率变化或者季节性因素的影响。为了优化理财产品的推广策略，银行可以考虑：
-                            \n加强针对第二季度客户的市场调研，了解其投资偏好和需求变化。
-                            \n推出更具吸引力的理财产品和服务，以增加客户的投资参与度。
-                            \n提供个性化的理财建议，帮助客户做出更理性的投资决策，从而提升交易活跃度和客户满意度。"""
+                            f"第一季度（1月至3月）理财交易金额总计: {answers[0]['n.first_quarter']}元。第二季度（4月至6月）理财交易金额总计: {answers[0]['n.second_quarter']}元。"
                         )
 
                     if(question_type == "区间人数占比_potential"):

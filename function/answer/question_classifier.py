@@ -38,6 +38,7 @@ def classify(question):
     for relationType in relation_types:
         generate_combinations('', values, relationType, question_types)
 
+    print(333222111333222111111222333111222333, question_types)
     # 这一次的问题关键词与问题标签组合
     # TODO 需检查是否需要全排列，是否有可能乱序输入
     for relationType in relation_types:

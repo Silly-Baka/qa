@@ -6,7 +6,7 @@ segment_word_path = 'C:\\Users\\Supre_yuan\\Desktop\\qa\\function\\answer\\segme
 # tailTag = ['hobby', 'homemate', 'hometown', 'live', 'person']
 # answerTemplates = ['的爱好是：', '的室友是：', '的家乡是：', '住在：', '住的人数有：']
 
-questionTypes = ['用户_most_type', '用户_商品类别_recommend', 'NONE_parent', '用户_parent', '亲属_recommend', '交易金额_analysis', "区间人数占比_potential"]
+questionTypes = ['用户_most_type', '用户_商品类别_recommend', 'NONE_parent', '用户_parent', '亲属_recommend', '交易金额_analysis', "区间人数占比_potential", "交易金额_promotion"]
 answerTemplates = ['{}购买最多的商品类别为{}']
 
 # 疑问词，每个对象是一个问题的标签以及关键字列表
@@ -37,6 +37,10 @@ question_words = [
         # 有什么客户与疑似亲属有过相关的流水记录？
         # 1、xxx客户的疑似亲属相关信息？
         # 2、适合给这些客户推荐什么业务？
+    },
+    {
+        "label": "promotion",
+        "keywords": ['推广']
     }
 ]
 

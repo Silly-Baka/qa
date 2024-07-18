@@ -59,6 +59,7 @@ def generate_sql(data):
                             sql = [
                                 f"MATCH (t:`商品类别`)-[r:`推荐业务`]->(c:`信用卡`) WHERE t.name = '{categoryName}' RETURN c"
                             ]
+
                 if quetions == '亲属_recommend':
                     sql = [
                         f"MATCH (q:`亲属关系`)-[:`推荐业务`]->(p) return p"
@@ -97,7 +98,10 @@ def generate_sql(data):
                         f"MATCH (node:区间人数占比 {{name: '{name}'}})\
                         RETURN node.one, node.two, node.three, node.four, node.five, node.six, node.seven"
                     ]
-                print(98765432123456789, sql)
+                # print(98765432123456789, sql)
+
+                if quetions == "交易金额_promotion":
+                    sql = "promotion"
 
                 if(quetions == 'payer_UNtype'):
                     sql = [

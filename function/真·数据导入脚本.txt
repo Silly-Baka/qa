@@ -111,7 +111,7 @@ MERGE (date:交易日期 {name: tran_date})
 MERGE (description: 交易摘要 {name: description_name})
 MERGE (payer)-[r1:付款]->(tran)
 MERGE (tran)-[r2:收款]->(receiver)
-MERGE (tran)-[:流水信息]->(type)e
+MERGE (tran)-[:流水信息]->(type)
 MERGE (tran)-[:流水信息]->(date)
 MERGE (tran)-[:流水信息]->(description)
 WITH relation_name, payer, receiver
