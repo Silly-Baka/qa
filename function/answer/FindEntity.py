@@ -47,8 +47,10 @@ class FindEntity_base_similarity:
             for entity in self.entity_type.keys():
                 # 如果wordlist中的一个元素item在entity中
                 if item == entity:
+                    print(12345678987654321, item)
                     idfsim = similarity.tfidf_similarity(question, entity)
-                    if idfsim > 0.2:
+                    print(12345678987654321, idfsim)
+                    if idfsim > 0.1:
                         temp.append((item, entity, idfsim))
             if temp:
                 target.append(temp)

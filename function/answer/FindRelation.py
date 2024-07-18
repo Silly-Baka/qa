@@ -20,7 +20,7 @@ class findrelation_base_keywords:
         # for wd in self.place:self.wd_dict[wd]='UNplace'
         # for wd in self.recommend:self.wd_dict[wd]='UNrecommend'
 
-        print(self.wd_dict)
+        # self.wd_dict例如{'最多': 'most_type', '购买': 'most_type', '商品类别': 'most_type', '哪里': 'UNplace', '适合': 'recommend', '推荐': 'recommend'}
 
     def main(self,sentence):
         relationtype=set()
