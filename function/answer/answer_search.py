@@ -47,12 +47,19 @@ class answerearcher:
     '''根据对应的qustion_type，调用相应的回复模板'''
     def answer_template(self, result):
         # question_type例如name_UNhobby
+        print('okokokokokokokokokokokokokokok', result)
+        # if not result['answer']:
+        #     return '你好，我是红棉助手，有什么可以帮您~'
+        if result == {}:
+            return '你好，我是红棉助手，有什么可以帮您~'
+
         question_type = result['question_type']
         final_answer = []
 
         # 如果能搜到关键字，即data并不是空，但是用关键字搜数据库没有答案，则回复"哎呀抱歉了，暂时没有答案，红棉助手会尽快优化~"
         if not result['answer']:
-            return '哎呀抱歉了，暂时没有答案，红棉助手会尽快优化~'
+            print(111)
+            return '你好，我是红棉助手，有什么可以帮您~'
         else:
             # answers例如[{'n.name': '篮球', 'm.name': '张三'}, {'n.name': '篮球', 'm.name': '张三'}, {'n.name': '篮球', 'm.name': '张三'}, {'n.name': '篮球', 'm.name': '张三'}, {'n.name': '篮球', 'm.name': '张三'}]
             answers = result['answer']
@@ -174,7 +181,7 @@ class answerearcher:
 
 
 if __name__ == "__main__":
-    question='有什么客户与疑似亲属有过相关的流水记录？'
+    question='你好？'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)
@@ -185,7 +192,7 @@ if __name__ == "__main__":
     ans=searcher.main(b)
     print('ans:',ans)
 
-    question = '汤继锐疑似亲属的相关信息'
+    question = '有什么客户与疑似亲属有过相关的流水记录'
     a=question_classifier.classify(question)
     print('a:',a)
     b=generate_sqls.generate_sql(a)
@@ -196,13 +203,13 @@ if __name__ == "__main__":
     ans=searcher.main(b)
     print('ans:',ans)
 
-    question = '这些用户适合推荐什么业务'
-    a=question_classifier.classify(question)
-    print('a:',a)
-    b=generate_sqls.generate_sql(a)
-    print('sqls:', b)
-    searcher = answerearcher()
-    # b例如[{'question_type': 'name_UNhobby', 'sql': ["MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"]}]
-    # b就为非经典的sql语句
-    ans=searcher.main(b)
-    print('ans:',ans)
+    # question = '这些用户适合推荐什么业务'
+    # a=question_classifier.classify(question)
+    # print('a:',a)
+    # b=generate_sqls.generate_sql(a)
+    # print('sqls:', b)
+    # searcher = answerearcher()
+    # # b例如[{'question_type': 'name_UNhobby', 'sql': ["MATCH(m:name)-[r:name_hobby]->(n:hobby) where m.name='张三' return n.name, m.name"]}]
+    # # b就为非经典的sql语句
+    # ans=searcher.main(b)
+    # print('ans:',ans)

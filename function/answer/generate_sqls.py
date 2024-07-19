@@ -11,7 +11,6 @@ def generate_sql(data):
     # 这种情况下，在后面的代码中会直接回复"你好，我是红棉助手，有什么可以帮您~"
     if data == {}:
         sqls.append({'question_type': 'payer_UNCommon', 'sql': '1'})
-
         return sqls
 
     args = data['args']

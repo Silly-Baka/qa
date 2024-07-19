@@ -15,7 +15,7 @@ def classify(question):
     # entity_types例如{'黄嘉桓': '付款方'}
     entity_types = entityfinder.main(question)
 
-    if len(entity_types) == 0 and len(utils.pre_entity_types) == 0:
+    if len(entity_types) == 0 and isPreNone():
         entity_types['NONE'] = 'NONE'
 
     # 问题类型列表
@@ -127,6 +127,13 @@ def generate_combinations(current, remaining, relation_type, question_types):
 #     result.add(relation_type)
 #
 #     return result
+
+def isPreNone():
+    if len(utils.pre_entity_types) == 1 and utils.pre_entity_types.get('NONE', None) == 'NONE':
+        return 1
+    if len(utils.pre_entity_types) == 0:
+        return 1
+    return 0
 
 
 
